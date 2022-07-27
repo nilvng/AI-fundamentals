@@ -94,23 +94,56 @@ def get_successors(juga,jugb):
     return successors
 
 def bfs(a,b):
-    pass
+    print("BFS")
+    queue = Queue()
+    closed_list = set()
+
+    juga = Jug(a)
+    jugb = Jug(b)
+
+    queue.push((0,0))
+
+    while not queue.isEmpty():
+        state = queue.pop()
+        if state in closed_list: # a bug of state in open list twice
+            continue
+        closed_list.add(state)
+
+        if goal_check(state[0], state[1]):
+            print("found it")
+            break
+        print(f"parent state: {state}")
+        juga.set_state(state[0])
+        jugb.set_state(state[1])
+        successors = get_successors(juga, jugb)
+        unvisited = successors.difference(closed_list)
+
+        print(f"nodes: {unvisited}")
+
+        for success in unvisited:
+            queue.push(success)
 
 def goal_check(a,b):
     return a == 1 or b == 1
 
 def dfs(a,b):
+    print("DFS")
+
     stack = Stack()
     closed_list = set()
 
-    juga = Jug(3)
-    jugb = Jug(5)
+    juga = Jug(a)
+    jugb = Jug(b)
 
     stack.push((0,0))
 
     while not stack.isEmpty():
         state = stack.pop()
-        closed_list.add(state)
+
+        if state in closed_list: # a bug of state in open list twice
+            continue
+        else:
+            closed_list.add(state)
 
         if goal_check(state[0], state[1]):
             print("found it")
@@ -131,5 +164,5 @@ def iterative_deepening():
     pass
 
 if __name__ == '__main__':
-    dfs(2,5)
-    #bfs(3,5)
+    #dfs(3,5)
+    bfs(3,5)
