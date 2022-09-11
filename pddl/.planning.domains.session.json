@@ -1,0 +1,11 @@
+{
+    "hash": "yPhoW2DCly",
+    "writeHash": "crZ9lehlcCkgdat",
+    "versionDate": "2022-08-24T01:23:25.000Z",
+    "files": {
+        "unnamed1.pddl": "",
+        "domain.pddl": ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;\n;;; 4 Op-blocks world\n;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;\n\n(define (domain BLOCKS)\n  (:requirements :strips)\n  (:predicates (on ?x ?y)\n\t       (ontable ?x)\n\t       (clear ?x)\n\t       (handempty)\n\t       (holding ?x)\n\t       )\n\n  (:action pick-up\n\t     :parameters (?x)\n\t     :precondition (and (clear ?x) (ontable ?x) (handempty))\n\t     :effect\n\t     (and (not (ontable ?x))\n\t\t   (not (clear ?x))\n\t\t   (not (handempty))\n\t\t   (holding ?x)))\n\n  (:action put-down\n\t     :parameters (?x)\n\t     :precondition (holding ?x)\n\t     :effect\n\t     (and (not (holding ?x))\n\t\t   (clear ?x)\n\t\t   (handempty)\n\t\t   (ontable ?x)))\n  (:action stack\n\t     :parameters (?x ?y)\n\t     :precondition (and (holding ?x) (clear ?y))\n\t     :effect\n\t     (and (not (holding ?x))\n\t\t   (not (clear ?y))\n\t\t   (clear ?x)\n\t\t   (handempty)\n\t\t   (on ?x ?y)))\n  (:action unstack\n\t     :parameters (?x ?y)\n\t     :precondition (and (on ?x ?y) (clear ?x) (handempty))\n\t     :effect\n\t     (and (holding ?x)\n\t\t   (clear ?y)\n\t\t   (not (clear ?x))\n\t\t   (not (handempty))\n\t\t   (not (on ?x ?y)))))\n",
+        "probBLOCKS-10-1.pddl": "(define (problem BLOCKS-10-1)\n(:domain BLOCKS)\n(:objects D A J I E G H B F C )\n(:INIT (CLEAR C) (CLEAR F) (ONTABLE B) (ONTABLE H) (ON C G) (ON G E) (ON E I)\n (ON I J) (ON J A) (ON A B) (ON F D) (ON D H) (HANDEMPTY))\n(:goal (AND (ON C B) (ON B D) (ON D F) (ON F I) (ON I A) (ON A E) (ON E H)\n            (ON H G) (ON G J)))\n)"
+    },
+    "plugins": {}
+}

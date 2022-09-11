@@ -1,0 +1,5 @@
+c Here is a sample of 5 variables and 3 clauses
+p cnf 5 3
+1 -5 4 0
+-1 5 3 4 0
+-3 -4 0
